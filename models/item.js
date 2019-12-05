@@ -1,9 +1,10 @@
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ItemSchema = new Schema(
 	{
 		name: {type: String, required: true},
-		description: {type: String, required: true},
+		description: {type: String},
 		category: {type: Schema.Types.ObjectId, ref: 'Category', required: true},
 		price: {type: String, required: true},
 		numInStock: {type: Number, required: true}
