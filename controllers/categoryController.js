@@ -2,7 +2,7 @@ var async = require('async')
 var Category = require('../models/category')
 var Item = require('../models/item')
 
-//const validator = require('express-validator');
+const validator = require('express-validator');
 
 exports.category_list = function(req, res, next) {
 	Category.find()
@@ -35,5 +35,46 @@ exports.category_detail = function(req, res, next) {
 };
 
 exports.category_create_get = function(req, res, next) {
-	res.render('category_form', { title: 'Category Create' });
+	res.render('category_form', { title: 'Create Category' });
 };
+
+exports.category_create_post = [
+	//validate that name field not empty
+	validator.body('name', 'Category name required').isLength({ min: 1 }).trim(),
+	//sanitize name field
+	validator.sanitizeBody('name').escape(),
+	//process request after validation & sanitization
+	(req, res, next) => {
+		//Extract the validation errors from a request
+		const errors = validator.validationResult(req);
+		//create genre object with escaped & trimmed data
+		var category = new Category(
+			{ name: req.body.name }
+		);
+
+		if (!errors.isEmpty()) {
+			//errors, render the form again
+			res.render('category_form', { title: 'Create Category', category: category, errors: errors.array()});
+			return;
+		}
+		else {
+			//data from form is valid
+			//check if genre with same name exists
+			Category.findOne({ 'name': req.body.name })
+				.exec( function(err, found_category) {
+					if (err) { return next(err); }
+					if (found_category) {
+						//genre exists, redirect to its detail page
+						res.redirect(found_category.url);
+					}
+					else {
+						category.save(function (err) {
+							if (err) { return next(err); }
+							//genre saved, redirect to genre detail
+							res.redirect(category.url);
+						});
+					}
+				});
+		}
+	}
+];

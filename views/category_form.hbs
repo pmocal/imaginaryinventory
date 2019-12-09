@@ -1,7 +1,11 @@
-<h1>Create {{title}}</h1>
+<h1>{{title}}</h1>
 <form method="POST" action=''>
 	<label for="name">Name:</label>
-	<input id="name" type="text" placeholder="name">
+	{{#if category}}
+		<input id="name" type="text" name="name" placeholder="Enter a name">
+	{{else}}
+		<input id="name" type="text" name="name" placeholder="{{category}}">
+	{{/if}}
 	<button type="submit">Submit</button>
 </form>
 {{#if errors}}
