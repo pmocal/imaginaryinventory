@@ -33,3 +33,7 @@ exports.category_detail = function(req, res, next) {
 		res.render('category_detail', { title: 'Category Detail', category: results.category, category_items: results.categories_items});
 	});
 };
+
+exports.category_create_get = function(req, res, next) {
+	res.render('category_form', { title: 'Category Create' });
+};

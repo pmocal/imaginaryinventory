@@ -1,0 +1,13 @@
+<h1>Create {{title}}</h1>
+<form method="POST" action=''>
+	<label for="name">Name:</label>
+	<input id="name" type="text" placeholder="name">
+	<button type="submit">Submit</button>
+</form>
+{{#if errors}}
+	<ul>
+		{{#each errors}}
+			<li>{{this.msg}}</li>
+		{{/each}}
+	</ul>
+{{/if}}
