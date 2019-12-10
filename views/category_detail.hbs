@@ -1,8 +1,13 @@
-<h1>{{category}}</h1>
+<h1>{{category.name}}</h1>
+<h2>{{category.description}}</h2>
 <ul>
 	{{#each category_items}}
 		<li>
-			{{this.name}}
+			<span>{{this.name}}</span>
+			<p>{{this.description}}</p>
 		</li>
 	{{/each}}
 </ul>
+
+{{> footer id=category.id}}
+{{> back_button}}

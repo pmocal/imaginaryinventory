@@ -15,7 +15,7 @@ exports.index = function(req, res) {
 			Category.countDocuments({status:'Available'}, callback);
 		},
 	}, function(err, results) {
-		res.render('index', { title: 'Store Overview', error: err, data: results });
+		res.render('index', { title: 'Store Overview', error: err, data: results, categories_url: "./categories", items_url: "./items" });
 	});
 };
 
