@@ -2,5 +2,63 @@
 <h1>Create Item</h1>
 <form>
 	<label for="name">Name:</label>
-	<input id="name" placeholder="name">
+	{{#if item}}
+		<input id="name" name="name">
+	{{else}}
+		<input id="name" name="name" placeholder="{{item.name}}">
+	{{/if}}
+	<label for="description">Name:</label>
+	{{#if item}}
+		<input id="description" name="description">
+	{{else}}
+		<input id="description" name="description" placeholder="{{item.description}}">
+	{{/if}}
+	<label for="category">Category:</label>
+	<select id="category" type="select" placeholder="Select category" name="category" required="true">
+		{{#each authors}}
+			{{#ifEquals (toString this._id) book.author}}
+				{{#ifNotEquals (toString this._id) (get_Id book.author)}}
+					<option value="{{this._id}}" selected="true">{{this.name}}</option>
+				{{/ifNotEquals}}
+			{{/ifEquals}}
+
+			{{#ifNotEquals (toString this._id) book.author}}
+				{{#ifEquals (toString this._id) (get_Id book.author)}}
+					<option value="{{this._id}}" selected="true">{{this.name}}</option>
+				{{/ifEquals}}
+			{{/ifNotEquals}}
+
+			{{#ifEquals (toString this._id) book.author}}
+				{{#ifEquals (toString this._id) (get_Id book.author)}}
+					<option value="{{this._id}}" selected="true">{{this.name}}</option>
+				{{/ifEquals}}
+			{{/ifEquals}}
+
+			{{#ifNotEquals (toString this._id) (get_Id book.author)}}
+				{{#ifNotEquals (toString this._id) book.author}}
+					<option value="{{this._id}}" selected="false">{{this.name}}</option>
+				{{/ifNotEquals}}
+			{{/ifNotEquals}}
+		{{/each}}
+	</select>
+	<label for="price">Price:</label>
+	{{#if item}}
+		<input id="price" name="price">
+	{{else}}
+		<input id="price" name="price" placeholder="{{item.price}}">
+	{{/if}}
+	<label for="numInStock">Number in stock:</label>
+	{{#if item}}
+		<input id="numInStock" name="numInStock">
+	{{else}}
+		<input id="numInStock" name="numInStock" placeholder="{{item.numInStock}}">
+	{{/if}}
 </form>
+{{#if errors}}
+	<ul>
+		{{#each errors}}
+			<li>{{this.msg}}</li>
+		{{/each}}
+	</ul>
+{{/if}}
+{{> back_button}}
