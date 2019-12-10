@@ -15,30 +15,34 @@
 	{{/if}}
 	<label for="category">Category:</label>
 	<select id="category" type="select" placeholder="Select category" name="category" required="true">
-		{{#each authors}}
-			{{#ifEquals (toString this._id) book.author}}
-				{{#ifNotEquals (toString this._id) (get_Id book.author)}}
-					<option value="{{this._id}}" selected="true">{{this.name}}</option>
-				{{/ifNotEquals}}
-			{{/ifEquals}}
-
-			{{#ifNotEquals (toString this._id) book.author}}
-				{{#ifEquals (toString this._id) (get_Id book.author)}}
-					<option value="{{this._id}}" selected="true">{{this.name}}</option>
+		{{#each categories}}
+			{{#if item}}
+				{{#ifEquals (toString this._id) item.category}}
+					{{#ifNotEquals (toString this._id) (get_Id item.category)}}
+						<option value="{{this._id}}" selected="true">{{this.name}}</option>
+					{{/ifNotEquals}}
 				{{/ifEquals}}
-			{{/ifNotEquals}}
 
-			{{#ifEquals (toString this._id) book.author}}
-				{{#ifEquals (toString this._id) (get_Id book.author)}}
-					<option value="{{this._id}}" selected="true">{{this.name}}</option>
-				{{/ifEquals}}
-			{{/ifEquals}}
-
-			{{#ifNotEquals (toString this._id) (get_Id book.author)}}
-				{{#ifNotEquals (toString this._id) book.author}}
-					<option value="{{this._id}}" selected="false">{{this.name}}</option>
+				{{#ifNotEquals (toString this._id) item.category}}
+					{{#ifEquals (toString this._id) (get_Id item.category)}}
+						<option value="{{this._id}}" selected="true">{{this.name}}</option>
+					{{/ifEquals}}
 				{{/ifNotEquals}}
-			{{/ifNotEquals}}
+
+				{{#ifEquals (toString this._id) item.category}}
+					{{#ifEquals (toString this._id) (get_Id item.category)}}
+						<option value="{{this._id}}" selected="true">{{this.name}}</option>
+					{{/ifEquals}}
+				{{/ifEquals}}
+
+				{{#ifNotEquals (toString this._id) (get_Id item.category)}}
+					{{#ifNotEquals (toString this._id) item.category}}
+						<option value="{{this._id}}" selected="false">{{this.name}}</option>
+					{{/ifNotEquals}}
+				{{/ifNotEquals}}
+			{{else}}
+				<option value="{{this._id}}">{{this.name}}</option>
+			{{/if}}
 		{{/each}}
 	</select>
 	<label for="price">Price:</label>

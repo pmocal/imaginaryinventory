@@ -39,3 +39,11 @@ exports.item_detail = function(req, res, next) {
 			res.render('item_detail', { title: 'Item Detail', item: item });
 		})
 };
+
+exports.item_create_get = function(req, res, next) {
+	Category.find()
+		.exec(function(err, list_categories) {
+			if (err) { return next(err) };
+			res.render('item_form', { title: 'Create item', categories: list_categories });
+		})
+};
