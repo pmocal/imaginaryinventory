@@ -78,3 +78,56 @@ exports.category_create_post = [
 		}
 	}
 ];
+
+exports.category_delete_get = function(req, res, next) {
+	async.parallel({
+		category: function(callback) {
+			Category.findById(req.params.id)
+			.exec(callback)
+		},
+		category_items: function(callback) {
+			Item.find({ 'category': req.params.id }, "name description")
+			.exec(callback)
+		},
+	}, function(err, results) {
+		if (err) { return next(err); } //error in API usage
+		if (results.category==null) {
+			var err = new Error('Category not found');
+			err.status = 404;
+			return next(err);
+		}
+		res.render('category_delete',
+			{ title: 'Category Delete form', category: results.category, category_items: results.category_items });
+	});
+};
+
+exports.category_delete_post = function(req, res, next) {
+	async.parallel({
+		category: function(callback) {
+			Category.findById(req.params.id)
+			.exec(callback)
+		},
+		category_items: function(callback) {
+			Item.find({ 'category' : req.params.id })
+			.exec(callback)
+		},
+	}, function(err, results) {
+		if (err) { return next(err); }
+		if (results.category == null) {
+			var err = new Error('Category not found');
+			err.status = 404;
+			return next(err);
+		} else if (results.category_items.length > 0) {
+			var err = new Error('Category has items');
+			err.status = 404;
+			return next(err);
+		} else{
+			Category.findByIdAndRemove(req.params.id, function deleteAuthor(err) {
+				if (err) { return next(err); }
+				// Success - go to author list
+				res.redirect('/store/categories');
+			})
+		}
+
+	});
+};

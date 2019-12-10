@@ -1,0 +1,17 @@
+<h1>{{title}}</h1>
+<h2>{{category}}</h2>
+{{#if category_items}}
+	<p> to delete this category, you must first delete its items. </p>
+	<ul>
+		{{#each category_items}}
+			<li>
+				<a href="{{this.url}}">{{this.name}}</a>
+			</li>
+		{{/each}}
+	</ul>
+{{else}}
+	<form method="POST" action=''>
+		<label>Click submit if you sure you want to delete.</label>
+		<input type="submit">
+	</form>
+{{/if}}
