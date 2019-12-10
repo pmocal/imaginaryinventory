@@ -15,13 +15,13 @@ router.get('/items', item_controller.item_list);
 
 router.get('/item/:id', item_controller.item_detail);
 
-// router.get('/item/delete', item_controller.item_delete_get);
+// router.get('/item/:id/delete', item_controller.item_delete_get);
 
-// router.post('/item/delete', item_controller.item_delete_post);
+// router.post('/item/:id/delete', item_controller.item_delete_post);
 
-// router.get('/item/update', item_controller.item_update_get);
+// router.get('/item/:id/update', item_controller.item_update_get);
 
-// router.post('/item/update', item_controller.item_update_post);
+// router.post('/item/:id/update', item_controller.item_update_post);
 
 router.get('/categories', category_controller.category_list);
 
@@ -35,8 +35,8 @@ router.get('/category/:id/delete', category_controller.category_delete_get);
 
 router.post('/category/:id/delete', category_controller.category_delete_post);
 
-// router.get('/category/update', category_controller.category_update_get);
+router.get('/category/:id/update', category_controller.category_update_get);
 
-// router.post('/category/update', category_controller.category_update_post);
+router.post('/category/:id/update', category_controller.category_update_post);
 
 module.exports = router;

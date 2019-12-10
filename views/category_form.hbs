@@ -2,9 +2,9 @@
 <form method="POST" action=''>
 	<label for="name">Name:</label>
 	{{#if category}}
-		<input id="name" type="text" name="name" placeholder="Enter a name">
+		<input id="name" type="text" name="name" value="{{category.name}}">
 	{{else}}
-		<input id="name" type="text" name="name" placeholder="{{category}}">
+		<input id="name" type="text" name="name" placeholder="Enter a name">
 	{{/if}}
 	<button type="submit">Submit</button>
 </form>
