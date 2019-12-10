@@ -1,5 +1,5 @@
-# Imaginary Inventory app
+# Imaginary Inventory
 ## Description
-### An application that manages inventory for a store with various goods. The app is hosted on Heroku and built in Node. Data is stored in MongoDB and the Express library is being used to access it.
+An application that manages inventory for a store with various goods. The app is hosted on Heroku and built in Node. Data is stored in MongoDB and the Express library is being used to access it.
 ## Screenshot
 ![screenshot](readme.png)
