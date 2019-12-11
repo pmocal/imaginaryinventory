@@ -81,13 +81,7 @@ exports.item_create_post = [
 
 		if (!errors.isEmpty()) {
 			// There are errors. Render form again with sanitized values/error messages.
-
-			Category.find()
-			.exec( function(err, results) {
-				if (err) { return next(err); }
-				res.render('book_form', { title: 'Create Item', item: item, errors: errors.array() });
-			});
-			return;
+			res.render('book_form', { title: 'Create Item', item: item, errors: errors.array() });
 		}
 		else {
 			// Data from form is valid. Save book.
@@ -99,3 +93,38 @@ exports.item_create_post = [
 		}
 	}
 ];
+
+exports.item_delete_get = function(req, res, next) {
+	Item.findById(req.params.id)
+		.populate('category')
+		.exec(function(err, item) {
+			if (err) {
+				return next(err);
+			}
+			if (item==null) {
+				var err = new Error('Item not found');
+				err.status = 404;
+				return next(err);
+			}
+			res.render('item_delete', { title: 'Item Delete', item: item });
+		})
+}
+
+exports.item_delete_post = function(req, res, next) {
+	Item.findByIdAndRemove(req.params.id)
+		.exec(function(err, item) {
+			if (err) {
+				return next(err);
+			}
+			if (item==null) {
+				var err = new Error('Item not found');
+				err.status = 404;
+				return next(err);
+			} else{
+			Item.findByIdAndRemove(req.params.id, function deleteItem(err) {
+				if (err) { return next(err); }
+				res.redirect('/store/items');
+			})
+		}
+		})
+}

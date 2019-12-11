@@ -12,7 +12,7 @@ exports.category_list = function(req, res, next) {
 		});
 };
 
-//display detail page for a specific author
+//display detail page for a specific category
 exports.category_detail = function(req, res, next) {
 	async.parallel({
 		category: function(callback) {
@@ -122,35 +122,13 @@ exports.category_delete_post = function(req, res, next) {
 			err.status = 404;
 			return next(err);
 		} else{
-			Category.findByIdAndRemove(req.params.id, function deleteAuthor(err) {
+			Category.findByIdAndRemove(req.params.id, function deleteCategory(err) {
 				if (err) { return next(err); }
-				// Success - go to author list
+				// Success - go to category list
 				res.redirect('/store/categories');
 			})
 		}
 
-	});
-};
-
-exports.category_delete_get = function(req, res, next) {
-	async.parallel({
-		category: function(callback) {
-			Category.findById(req.params.id)
-			.exec(callback)
-		},
-		category_items: function(callback) {
-			Item.find({ 'category': req.params.id }, "name description")
-			.exec(callback)
-		},
-	}, function(err, results) {
-		if (err) { return next(err); } //error in API usage
-		if (results.category==null) {
-			var err = new Error('Category not found');
-			err.status = 404;
-			return next(err);
-		}
-		res.render('category_delete',
-			{ title: 'Category Delete form', category: results.category, category_items: results.category_items });
 	});
 };
 

@@ -15,9 +15,9 @@ router.post('/items/create', item_controller.item_create_post);
 
 router.get('/items/:id', item_controller.item_detail);
 
-// router.get('/items/:id/delete', item_controller.item_delete_get);
+router.get('/items/:id/delete', item_controller.item_delete_get);
 
-// router.post('/items/:id/delete', item_controller.item_delete_post);
+router.post('/items/:id/delete', item_controller.item_delete_post);
 
 // router.get('/items/:id/update', item_controller.item_update_get);
 
