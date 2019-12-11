@@ -19,9 +19,9 @@ router.get('/items/:id/delete', item_controller.item_delete_get);
 
 router.post('/items/:id/delete', item_controller.item_delete_post);
 
-// router.get('/items/:id/update', item_controller.item_update_get);
+router.get('/items/:id/update', item_controller.item_update_get);
 
-// router.post('/items/:id/update', item_controller.item_update_post);
+router.post('/items/:id/update', item_controller.item_update_post);
 
 router.get('/categories', category_controller.category_list);
 

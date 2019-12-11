@@ -81,7 +81,7 @@ exports.item_create_post = [
 
 		if (!errors.isEmpty()) {
 			// There are errors. Render form again with sanitized values/error messages.
-			res.render('book_form', { title: 'Create Item', item: item, errors: errors.array() });
+			res.render('item_form', { title: 'Create Item', item: item, errors: errors.array() });
 		}
 		else {
 			// Data from form is valid. Save book.
@@ -128,3 +128,69 @@ exports.item_delete_post = function(req, res, next) {
 		}
 		})
 }
+
+exports.item_update_get = function(req, res, next) {
+	async.parallel({
+		item: function(callback) {
+			Item.findById(req.params.id, callback);
+		},
+		list_categories: function(callback) {
+			Category.find({}, callback);
+		},
+	}, function(err, results) {
+		if (err) {
+			return next(err);
+		}
+		if (results.item == null) {
+			var err = new Error('Item not found');
+			err.status = 404;
+			return next(err);
+		}
+		res.render('item_form', { title: 'Item Update', item: results.item, categories: results.list_categories });
+	});
+}
+
+exports.item_update_post = [
+	// Validate fields.
+	check('name', 'Name must not be empty.').isLength({ min: 1 }).trim(),
+	check('description', 'Description must not be empty.').isLength({ min: 1 }).trim(),
+	check('price', 'Price must not be empty.').isLength({ min: 1 }).trim(),
+	check('numInStock', 'Number in stock must not be empty').isLength({ min: 1 }).trim(),
+
+	// Sanitize fields (using wildcard).
+	sanitizeBody('category').escape(),
+	sanitizeBody('name').escape(),
+	sanitizeBody('description').escape(),
+	sanitizeBody('price').escape(),
+	sanitizeBody('numInStock').escape(),
+	
+	// Process request after validation and sanitization.
+	(req, res, next) => {
+		
+		// Extract the validation errors from a request.
+		const errors = validationResult(req);
+
+		// Create a Book object with escaped and trimmed data.
+		var item = new Item(
+		  { name: req.body.name,
+			description: req.body.description,
+			category: req.body.category,
+			price: req.body.price,
+			numInStock: req.body.numInStock,
+			_id: req.params.id
+		   });
+
+		if (!errors.isEmpty()) {
+			// There are errors. Render form again with sanitized values/error messages.
+			res.render('book_form', { title: 'Create Item', item: item, errors: errors.array() });
+		}
+		else {
+			// Data from form is valid. Save book.
+			Item.findByIdAndUpdate(req.params.id, item, {}, function (err, theitem) {
+				if (err) { return next(err); }
+				   //successful - redirect to new book record.
+				   res.redirect(theitem.url);
+				});
+		}
+	}
+];

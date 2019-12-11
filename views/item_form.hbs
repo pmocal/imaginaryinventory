@@ -1,17 +1,16 @@
-{{title}}
-<h1>Create Item</h1>
+<h1>{{title}}</h1>
 <form method="POST" action="">
 	<label for="name">Name:</label>
 	{{#if item}}
-		<input id="name" name="name">
+		<input id="name" name="name" value="{{item.name}}">
 	{{else}}
-		<input id="name" name="name" placeholder="{{item.name}}">
+		<input id="name" name="name">
 	{{/if}}
 	<label for="description">Description:</label>
 	{{#if item}}
-		<input id="description" name="description">
+		<input id="description" name="description" value="{{item.description}}">	
 	{{else}}
-		<input id="description" name="description" placeholder="{{item.description}}">
+		<input id="description" name="description">
 	{{/if}}
 	<label for="category">Category:</label>
 	<select id="category" type="select" placeholder="Select category" name="category" required="true">
@@ -47,15 +46,15 @@
 	</select>
 	<label for="price">Price:</label>
 	{{#if item}}
-		<input id="price" name="price">
+		<input id="price" name="price" value="{{item.price}}">
 	{{else}}
-		<input id="price" name="price" placeholder="{{item.price}}">
+		<input id="price" name="price">
 	{{/if}}
 	<label for="numInStock">Number in stock:</label>
 	{{#if item}}
-		<input id="numInStock" name="numInStock">
+		<input id="numInStock" name="numInStock" value="{{item.numInStock}}">
 	{{else}}
-		<input id="numInStock" name="numInStock" placeholder="{{item.numInStock}}">
+		<input id="numInStock" name="numInStock">
 	{{/if}}
 	<input type="submit">
 </form>
