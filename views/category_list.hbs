@@ -1,8 +1,6 @@
-<h1>{{title}}</h1>
 <ul>
 	{{#each category_list}}
 		<li><a href="/store/categories/{{this.id}}">{{this.name}}</a></li>
 	{{/each}}
 </ul>
 <a href="/store/categories/create">Create category</a>
-{{> back_button}}
