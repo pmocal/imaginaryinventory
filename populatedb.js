@@ -9,7 +9,7 @@ var Item = require('./models/item')
 
 var mongoose = require('mongoose');
 var mongoDb = "mongodb+srv://" + process.env.DB_USER + ":" + 
-  process.env.DB_PASS + "@" + process.env.DB_HOST + "/express-auth?retryWrites=true&w=majority";
+  process.env.DB_PASS + "@" + process.env.DB_HOST + "/imaginaryinventory?retryWrites=true&w=majority";
 mongoose.connect(mongoDb, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
