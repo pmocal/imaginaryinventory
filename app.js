@@ -8,7 +8,7 @@ var hbs = require('hbs');
 const mongoDb = "mongodb+srv://" + process.env.DB_USER + ":" + 
   process.env.DB_PASS + "@" + process.env.DB_HOST + "/express-auth?retryWrites=true&w=majority";
 
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: false });
+mongoose.connect(mongoDb, { useNewUrlParser: true, useUnifiedTopology: false });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
@@ -19,6 +19,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var storeRouter = require('./routes/store');
+
 
 var app = express();
 

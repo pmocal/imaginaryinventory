@@ -1,8 +1,11 @@
 var async = require('async')
 var Category = require('../models/category')
 var Item = require('../models/item')
-
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
+var path = require('path');
 const validator = require('express-validator');
+const fs = require('fs');
 
 exports.category_list = function(req, res, next) {
 	Category.find()
@@ -44,7 +47,25 @@ exports.category_create_post = [
 	//sanitize name field
 	validator.sanitizeBody('name').escape(),
 	//process request after validation & sanitization
+	upload.single('file'),
 	(req, res, next) => {
+		const tempPath = req.file.path;
+		const targetPath = path.join(__dirname, "./uploads/" + req.body.name + ".png");
+		if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+	    	fs.rename(tempPath, targetPath, err => {
+	    	if (err) return next(err);
+	    	res.status(200)
+				.contentType("text/plain")
+				.end("File uploaded!");
+	      	});
+	    } else {
+			fs.unlink(tempPath, err => {
+			if (err) return next(err);
+			res.status(403)
+				.contentType("text/plain")
+				.end("Only .png files are allowed!");
+			});
+		}
 		//Extract the validation errors from a request
 		const errors = validator.validationResult(req);
 		//create genre object with escaped & trimmed data
