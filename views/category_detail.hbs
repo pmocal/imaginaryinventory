@@ -1,11 +1,11 @@
 <h1>{{category.name}}</h1>
+<img src="./../public/uploads/{{category.name}}.png">
 <h2>{{category.description}}</h2>
 <ul>
 	{{#each category_items}}
 		<li>
 			<span>{{this.name}}</span>
 			<p>{{this.description}}</p>
-			<img src="./uploads/{{this.name}}.png">
 		</li>
 	{{/each}}
 </ul>
