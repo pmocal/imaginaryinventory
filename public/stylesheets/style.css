@@ -10,8 +10,6 @@ a {
 }
 
 #banner {
-  grid-row-start: 1;
-  grid-row-end: 3;
   font-family: 'Righteous', cursive;
   font-size: 300%;
 }
