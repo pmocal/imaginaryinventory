@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var hbs = require('hbs');
 
 const mongoDb = "mongodb+srv://" + process.env.DB_USER + ":" + 
-  process.env.DB_PASS + "@" + process.env.DB_HOST + "/express-auth?retryWrites=true&w=majority";
+  process.env.DB_PASS + "@" + process.env.DB_HOST + "/imaginaryinventory?retryWrites=true&w=majority";
 
 mongoose.connect(mongoDb, { useNewUrlParser: true, useUnifiedTopology: false });
 var db = mongoose.connection;
